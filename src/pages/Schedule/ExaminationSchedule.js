@@ -13,6 +13,7 @@ import Homepage from './Homepage';
 import Schedule from './Schedule';
 import api from "../../interceptors/axios"
 import PropertiesForm from './PropertiesForm';
+import { GenerateScheduleRequest } from './Model/GenerateScheduleRequest';
 const ExaminationSchedule = () => {
     const [items, setItems] = useState([]);
     const [isCurrent, setIsCurrent] = useState(true)
@@ -24,7 +25,7 @@ const ExaminationSchedule = () => {
     const subjectSchedule = useRef();
     var propertiesForm = <PropertiesForm properties={properties}/>
     const fetchScheduleFile = async () => {
-        const data = await api.get("/subjects/schedule-files")
+        const data = await api.get("subjects/schedule-files")
             .then(res => res.data)
             .then((res) => {
                 setItems(res.data);
@@ -36,7 +37,8 @@ const ExaminationSchedule = () => {
         fetchScheduleFile()
     }, [])
     const generateNewSchedule = async () => {
-        const data = await api.post("subjects/newSchedule")
+        alert(properties);
+        const data = await api.post("subjects/newSchedule",JSON.stringify(new GenerateScheduleRequest(properties)))
             .then(response => response.json())
             .then((data) => {
                 console.log(data);
@@ -49,7 +51,7 @@ const ExaminationSchedule = () => {
 
     const setDefaultSchedule = async (fileName) => {
         setIsLoading(true)
-        const data = await api.post("/subject-schedules/as-default/" + fileName)
+        const data = await api.post("subject-schedules/as-default/" + fileName)
             .then(response => response.json())
             .then((data) => {
                 console.log(data);
