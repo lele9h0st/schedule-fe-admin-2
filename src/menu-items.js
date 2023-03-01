@@ -9,7 +9,7 @@ export default {
             children: [
                 {
                     id: 'faculty',
-                    title: 'Faculty Exam Schedule',
+                    title: 'Lịch thi',
                     type: 'item',
                     url: '/exam-schedule',
                     icon: 'feather icon-file-text',
