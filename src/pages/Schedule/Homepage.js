@@ -73,7 +73,7 @@ const Homepage = forwardRef((props, ref) => {
                 setChange(prevState => {
                     return []
                 });
-                console.log(requestOptions.body);
+                alert("Đã thay đổi lịch thành công! Lịch mới thay đổi được thêm vào danh sách lịch thi");
            
                 window.location.reload();
 
