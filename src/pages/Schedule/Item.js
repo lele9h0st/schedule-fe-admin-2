@@ -52,7 +52,25 @@ const Item = ({ item, index, moveItem, status }) => {
     const onClose = () => setShow(false);
 
     drag(drop(ref));
-
+    const translateWord =(word)=>{
+        let result=word;
+        if(word=="current"){
+            result= "Lịch thi hiện tại."
+        }else if(word=="CHANGE"){
+            result=  "Thay đổi"
+        }else if(word=="DELETE"){
+            result=  "Xóa"
+        }else if(word=="NEW"){
+            result=  "Mới"
+        }else if(word=="ESSAY"){
+            result=  "Lý thuyết"
+        }else if(word=="COMPUTATIONAL"){
+            result=  "Thực hành"
+        }else if(word=="ORAL"){
+            result=  "Vấn đáp"
+        }
+        return result ;
+    }
     return (
         <Fragment>
             <div
@@ -64,7 +82,7 @@ const Item = ({ item, index, moveItem, status }) => {
                 {/* <div className={"color-bar"} style={{ backgroundColor: status.color }}/> */}
                 <p className={"item-title"}>Id: {item.subject.id}</p>
                 <p className={"item-title"}>Tên: {item.subject.name}</p>
-                <p className={"item-title"}>Hình thức thi: {item.subject.examType}</p>
+                <p className={"item-title"}>Hình thức thi: {translateWord(item.subject.examType)}</p>
                 <p className={"item-title"}>Số tiết thi: {item.subject.examTime}</p>
                 <p className={"item-title"}>Số tín chỉ: {item.subject.credit}</p>
                 {/* <p className={"item-status"}>{item.icon}</p> */}

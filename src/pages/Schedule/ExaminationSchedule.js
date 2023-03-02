@@ -97,6 +97,25 @@ const ExaminationSchedule = () => {
      
         // left: -12
     };
+    const translateWord =(word)=>{
+        let result=word;
+        if(word=="current"){
+            result= "Lịch thi hiện tại."
+        }else if(word=="CHANGE"){
+            result=  "Thay đổi"
+        }else if(word=="DELETE"){
+            result=  "Xóa"
+        }else if(word=="NEW"){
+            result=  "Mới"
+        }else if(word=="ESSAY"){
+            result=  "Lý thuyết"
+        }else if(word=="COMPUTATIONAL"){
+            result=  "Thực hành"
+        }else if(word=="ORAL"){
+            result=  "Vấn đáp"
+        }
+        return result ;
+    }
     return (
         <Aux>
             {propertiesForm}
@@ -113,7 +132,7 @@ const ExaminationSchedule = () => {
                             setIsCurrent(true)
                         }
                     }}>
-                        {i.fileStatus == 'USED' ? 'current' : i.name} - {i.fileStatus}
+                        {i.fileStatus == 'USED' ? "Lịch thi hiện tại." : i.name} - {translateWord(i.fileStatus)}
                     </Dropdown.Item>)
                     }
                 </DropdownButton>

@@ -120,7 +120,7 @@ const Homepage = forwardRef((props, ref) => {
                 }
             )
     }
-
+   
     function reformatDate(dateStr)
     {
       var dArr = dateStr.split("-");  // ex input: "2010-01-18"
