@@ -12,9 +12,13 @@
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-bootstrap": "^1.0.0-beta.5",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^16.8.4",
     "react-full-screen": "^0.2.4",
     "react-loadable": "^5.5.0",
+    "react-loading-overlay": "^1.0.1",
+    "react-modal": "^3.16.1",
     "react-notifications": "^1.7.4",
     "react-nvd3": "^0.5.7",
     "react-perfect-scrollbar": "^1.4.4",
@@ -27,10 +31,7 @@
     "redux": "^4.0.1",
     "redux-persist": "^6.0.0",
     "redux-saga": "^1.2.2",
-    "sass": "^1.56.2",
-    "react-dnd": "^16.0.1",
-    "react-dnd-html5-backend": "^16.0.1",
-    "react-modal": "^3.16.1"
+    "sass": "^1.56.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -48,6 +49,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "react-error-overlay": "^6.0.9",
     "react-to-print": "^2.1.1"
   }
 }

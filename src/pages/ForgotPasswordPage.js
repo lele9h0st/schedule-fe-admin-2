@@ -7,13 +7,13 @@ import Breadcrumb from "../App/layout/AdminLayout/Breadcrumb";
 import { login } from '../redux/auth/actions';
 import { connect } from 'react-redux';
 import PacmanLoader from "react-spinners/PacmanLoader";
+import api from '../interceptors/axios'
 import { NotificationManager } from 'react-notifications';
 
-class SignIn1 extends React.Component {
+class ForgotPassword extends React.Component {
     state = {
         username: '',
-        password: '',
-        messageEmail: ''
+        loading: false
     }
 
     componentDidMount() {
@@ -31,12 +31,37 @@ class SignIn1 extends React.Component {
     }
     render() {
 
-        const login = () => {
-            if(!this.state.messageEmail && this.state.username && this.state.password){
-                this.props.login(this.state.username, this.state.password)
-            }else{
-                NotificationManager.error("Vui lòng nhập đầy đủ thông tin");
+        const submitEmail = async () => {
+            // this.props.login(this.state.username, this.state.password)
+
+
+            this.setState({ loading: true })
+            try {
+                await api
+                    .get(`/auths/forgot-password?email=${this.state.username}`)
+                    .then((res) => {
+                        console.log(res);
+                        return res?.data;
+                    })
+                    .then((res) => {
+                        console.log(res);
+                        if (res?.status === 1) {
+                            window.location.href = `/update-password?email=${this.state.username}`;
+                        } else {
+                            NotificationManager.error(res?.message);
+                        }
+                    })
+                    .catch((e) => {
+                        // NotificationManager.error(e);
+
+                    });
+
+            } catch (error) {
+
             }
+
+            this.setState({ loading: false })
+
         }
 
         const override = {
@@ -45,15 +70,6 @@ class SignIn1 extends React.Component {
             borderColor: "white",
             left: -12
         };
-
-        const onChangeEmail = (e) => {
-            this.setState({ username: e.target.value })
-            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value)) {
-                this.setState({ messageEmail: "" })
-            } else {
-                this.setState({ messageEmail: "Email không hợp lệ." })
-            }
-        }
 
         return (
             <Aux>
@@ -71,35 +87,32 @@ class SignIn1 extends React.Component {
                                 <div className="mb-4">
                                     <i className="feather icon-unlock auth-icon" />
                                 </div>
-                                <h3 className="mb-4">Đăng nhập</h3>
+                                <h3 className="mb-4">Quên mật khẩu</h3>
+                                <p className="">Nhập email tài khoản</p>
                                 <div className="input-group mb-3">
-                                    <input type="email" className="form-control w-100" placeholder="Email"
-                                        onInput={(e) => { onChangeEmail(e) }} />
-                                    <p className="text-danger mb-0">
-                                        {this.state.messageEmail}
-                                    </p>
+                                    <input type="email" className="form-control" placeholder="Email"
+                                        onInput={(e) => { this.setState({ username: e.target.value }) }} />
                                 </div>
-                                <div className="input-group mb-4">
-                                    <input type="password" className="form-control" placeholder="password"
-                                        onInput={(e) => { this.setState({ password: e.target.value }) }} />
-                                </div>
-
-                                <button className="btn btn-primary shadow-2 mb-4" onClick={login}>
-                                    {this.props.auth.loading ?
+                                <button className="btn btn-primary shadow-2 mb-4" onClick={submitEmail}>
+                                    {this.state.loading ?
                                         <PacmanLoader
                                             cssOverride={override}
                                             size={11}
                                             color='white'
-                                            loading={this.props.auth.loading}
+                                            loading={this.state.loading}
                                             speedMultiplier={1.5}
                                             aria-label="Loading Spinner"
                                             data-testid="loader"
-                                        /> : "Đăng nhập"}
+                                        /> : "Xác nhận"}
                                 </button>
-                                <p className="mb-2 text-muted text-center">Quên mật khẩu? <NavLink to="/forgot-password">Cấp lại</NavLink></p>
+
+                                <p className="mb-2 text-muted">Có tài khoản? <NavLink to="/signin">Đăng nhập</NavLink></p>
+                                {/* <p className="mb-0 text-muted">Don’t have an account? <NavLink to="/auth/signup-1">Signup</NavLink></p> */}
                             </div>
                         </div>
                     </div>
+
+
 
                 </div>
             </Aux>
@@ -119,4 +132,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn1);
+export default connect(mapStateToProps, mapDispatchToProps)(ForgotPassword);
