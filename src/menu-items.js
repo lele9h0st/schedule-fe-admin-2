@@ -16,6 +16,14 @@ export default {
                     role:"ALL"
                 },
                 {
+                    id: 'generate',
+                    title: 'Tạo lịch thi',
+                    type: 'item',
+                    url: '/generate-schedule',
+                    icon: 'feather icon-file-text',
+                    role:"ALL"
+                },
+                {
                     id: 'logout',
                     title: 'Đăng xuất',
                     type: 'item',

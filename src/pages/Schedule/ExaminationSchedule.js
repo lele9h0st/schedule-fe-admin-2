@@ -118,7 +118,7 @@ const ExaminationSchedule = () => {
     }
     return (
         <Aux>
-            {propertiesForm}
+            {/* {propertiesForm} */}
             <DndProvider backend={HTML5Backend}>
                 <DropdownButton id="dropdown-basic-button" title="Lịch thi">
 
@@ -136,16 +136,16 @@ const ExaminationSchedule = () => {
                     </Dropdown.Item>)
                     }
                 </DropdownButton>
-                <Button onClick={generateNewSchedule}>
+                {/* <Button onClick={generateNewSchedule}>
                     {loadingCreateSchedule ?
                         <>
                            <span>Đang tạo lịch thi...</span>
                         </>
                         : "Tạo lịch thi mới"}
-                </Button>
+                </Button> */}
                 <Button onClick={() => onDownload()}>Tải lịch thi.</Button>
-                <Button onClick={() => openForm()}>Điều chỉnh thông số.</Button>
-                <Button onClick={() => console.log(properties)}>kiểm tra thông số.</Button>
+                {/* <Button onClick={() => openForm()}>Điều chỉnh thông số.</Button>
+                <Button onClick={() => console.log(properties)}>kiểm tra thông số.</Button> */}
                 {!isCurrent ? <Button onClick={() => setDefaultSchedule(currentFileName)}>Áp dụng lịch thi này.</Button> : null}
                 <div className={"row"}>
                     <h3 className={"page-header"}>Lịch thi theo môn học</h3>
