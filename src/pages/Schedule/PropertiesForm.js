@@ -46,7 +46,7 @@ const PropertiesForm = forwardRef((props, ref) => {
         <div class="custom-modal-content">
             <div class="custom-modal-header">
                 <span class="custom-close" onClick={() => close()}>&times;</span>
-                <h2>Thay đổi thông số lập lịch thi</h2>
+                <h6>Thay đổi thông số lập lịch thi</h6>
             </div>
             <div class="custom-modal-body" hotel={null}>
 
@@ -57,7 +57,6 @@ const PropertiesForm = forwardRef((props, ref) => {
                         <option  value={100}>100</option>
                         <option value={200}>200</option>
                         <option value={500}>500</option>
-                     
                     </select>
 
                 </div>

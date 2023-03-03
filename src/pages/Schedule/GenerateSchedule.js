@@ -3,11 +3,15 @@ import React, { useRef } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { GenerateScheduleRequest } from "./Model/GenerateScheduleRequest";
-import { Button } from 'react-bootstrap';
+import { Button, Row } from 'react-bootstrap';
 import api from "../../interceptors/axios"
+import { NotificationManager } from "react-notifications";
 const GenerateSchedule = () => {
     let properties = [100, 200, 10, 10, 10, 10, 10, 10]
     const [loadingCreateSchedule, setLoadingCreateSchedule] = useState(false)
+    const [loadingCreateScheduleExcel, setLoadingCreateScheduleExcel] = useState(false)
+
+    const [selectedFile, setselectedFile] = useState(undefined)
     const handleInputChange = (e) => {
 
         const { name, value } = e.target;
@@ -33,30 +37,81 @@ const GenerateSchedule = () => {
         }
     }
     const generateNewSchedule = async () => {
-        setLoadingCreateSchedule(true)
-        const data = await api.post("subjects/newSchedule",JSON.stringify(new GenerateScheduleRequest(properties)))
-            .then(response => response.json())
-            .then((data) => {
-                console.log(data);
+        try {
+            setLoadingCreateSchedule(true)
+            NotificationManager.info('Đang tạo lịch thi...');
+            const data = await api.post("subjects/newSchedule", JSON.stringify(new GenerateScheduleRequest(properties)));
+                
+            if (data?.data?.status == 1) {
+                NotificationManager.success(data?.data?.message);
+            } else if (data?.data?.status == 0) {
+                NotificationManager.error(data?.data?.message);
+            } else {
+                NotificationManager.error("Vui lòng thử lại");
+            }
+            setLoadingCreateSchedule(false)
+        } catch (error) {
+            setLoadingCreateSchedule(false)
+            NotificationManager.error("Vui lòng thử lại");
+        }
+
+    }
+
+    const generateNewScheduleExcel = async () => {
+        document.getElementById("selectFile").click()
+    }
+
+    const selectFile = async (event) => {
+        try {
+            setselectedFile(event.target.files[0])
+            let formData = new FormData();
+            formData.append("file", event.target.files[0]);
+            formData.append("properties", properties)
+            setLoadingCreateScheduleExcel(true)
+            NotificationManager.info('Đang tạo lịch thi...');
+            const data = await api.post("/subject-schedules/schedule-excel", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
             })
-            .catch(e => {
-                console.log(e);
-            })
-        setLoadingCreateSchedule(false)
+            if (data?.data?.status == 1) {
+                NotificationManager.success(data?.data?.message);
+            } else if (data?.data?.status == 0) {
+                NotificationManager.error(data?.data?.message);
+            } else {
+                NotificationManager.error("Vui lòng thử lại");
+            }
+            setLoadingCreateScheduleExcel(false)
+
+        } catch (error) {
+            setLoadingCreateScheduleExcel(false)
+            NotificationManager.error("Vui lòng thử lại");
+        }
+
     }
     return (
         <Aux>
+            <Row className="justify-content-start">
+                <input id="selectFile" style={{ display: "none" }} accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" type="file" onChange={selectFile} />
                 <Button onClick={generateNewSchedule}>
                     {loadingCreateSchedule ?
                         <>
-                           <span>Đang tạo lịch thi...</span>
+                            <span>Đang tạo lịch thi...</span>
                         </>
-                        : "Tạo lịch thi mới"}
+                        : "Tạo lịch thi mẫu trên server"}
                 </Button>
+                <Button onClick={generateNewScheduleExcel}>
+                    {loadingCreateScheduleExcel ?
+                        <>
+                            <span>Đang tạo lịch thi bằng excel...</span>
+                        </>
+                        : "Tạo lịch thi bằng excel"}
+                </Button>
+            </Row>
             <div id="editModal" class="custom-modal" >
                 <div class="custom-modal-content">
                     <div class="custom-modal-header">
-                        <h2>Thay đổi thông số lập lịch thi</h2>
+                        <h4>Thay đổi thông số lập lịch thi</h4>
                     </div>
                     <div class="custom-modal-body" hotel={null}>
 
@@ -148,8 +203,6 @@ const GenerateSchedule = () => {
                     </div>
                 </div>
             </div>
-
-
         </Aux>);
 
 }
