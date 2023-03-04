@@ -135,7 +135,7 @@ const Homepage = forwardRef((props, ref) => {
         <div>
             {isLoading?<div className="loading"> <img src="./src/assets/images/rolling-1s-200px.svg"></img></div>:null}
             {/* <div className="loading"> </div> */}
-            <div className={"row schedule"} >
+            <div className={"row schedule"} style={{color:"black"}} >
                 <div className="line-shift">
 
                     {statuses.map(s => {

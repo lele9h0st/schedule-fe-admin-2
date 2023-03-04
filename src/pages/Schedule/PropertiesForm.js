@@ -50,7 +50,7 @@ const PropertiesForm = forwardRef((props, ref) => {
             </div>
             <div class="custom-modal-body" hotel={null}>
 
-                <label>Population:</label>
+                <label>Số cá thể:</label>
                 <div class="input-group mb-3">
                     {/* <input type="text" class="form-control" name="maKS" disabled="disabled" onChange={(e) => handleInputChange(e)} defaultValue={properties[0]} /> */}
                      <select  name="population" className={"select-box"} onChange={(e) => handleInputChange(e)}>
@@ -60,7 +60,7 @@ const PropertiesForm = forwardRef((props, ref) => {
                     </select>
 
                 </div>
-                <label>MAX_ITERATION</label>
+                <label>Số lần lặp</label>
                 <div class="input-group mb-3">
                     {/* <input type="text" class="form-control" name="maKS" disabled="disabled" onChange={(e) => handleInputChange(e)} defaultValue={properties[1]} /> */}
                     <select  name="iteration" className={"select-box"} onChange={(e) => handleInputChange(e)}>
@@ -70,7 +70,7 @@ const PropertiesForm = forwardRef((props, ref) => {
                      
                     </select>
                 </div>
-                <label>sc1:</label>
+                <label>Hạn chế xếp 1 khóa phải thi lớn hơn 1 môn trong cùng 1 ngày</label>
                 <div class="input-group mb-3">
                     {/* <input type="text" class="form-control" name="maKS" disabled="disabled" onChange={(e) => handleInputChange(e)} defaultValue={properties[2]} /> */}
                     <select  name="sc1" className={"select-box"} onChange={(e) => handleInputChange(e)}>
@@ -80,7 +80,7 @@ const PropertiesForm = forwardRef((props, ref) => {
                         <option value="20">20</option>
                     </select>
                 </div>
-                <label>sc2:</label>
+                <label>Không xếp các thi rời rạc làm khó cán bộ coi thi</label>
                 <div class="input-group mb-3">
                     {/* <input type="text" class="form-control" name="maKS" disabled="disabled" onChange={(e) => handleInputChange(e)} defaultValue={properties[3]} /> */}
                     <select  name="sc2" className={"select-box"} onChange={(e) => handleInputChange(e)}>
@@ -90,7 +90,7 @@ const PropertiesForm = forwardRef((props, ref) => {
                         <option value="20">20</option>
                     </select>
                 </div>
-                <label>sc3:</label>
+                <label>Một môn thi không chia quá ít phòng thi trong một ca thi làm phát sinh nhiều ca thi</label>
                 <div class="input-group mb-3">
                     {/* <input type="text" class="form-control" name="maKS" disabled="disabled" onChange={(e) => handleInputChange(e)} defaultValue={properties[4]} /> */}
                     <select  name="sc3" className={"select-box"} onChange={(e) => handleInputChange(e)}>
@@ -100,7 +100,7 @@ const PropertiesForm = forwardRef((props, ref) => {
                         <option value="20">20</option>
                     </select>
                 </div>
-                <label>sc4:</label>
+                <label>Một ca thi hạn chế xếp nhiều hơn 2 môn học tránh bị trùng lịch thi của sinh viên</label>
                 <div class="input-group mb-3">
                     {/* <input type="text" class="form-control" name="maKS" disabled="disabled" onChange={(e) => handleInputChange(e)} defaultValue={properties[5]} /> */}
                     <select  name="sc4" className={"select-box"} onChange={(e) => handleInputChange(e)}>
@@ -110,7 +110,7 @@ const PropertiesForm = forwardRef((props, ref) => {
                         <option value="20">20</option>
                     </select>
                 </div>
-                <label>sc5:</label>
+                <label>Số lượng sinh viên xếp vào một phòng thi phải lớn hơn 50% sức chứa của phòng thi đó</label>
                 <div class="input-group mb-3">
                     {/* <input type="text" class="form-control" name="maKS" disabled="disabled" onChange={(e) => handleInputChange(e)} defaultValue={properties[6]} /> */}
                     <select  name="sc5" className={"select-box"} onChange={(e) => handleInputChange(e)}>
@@ -120,7 +120,7 @@ const PropertiesForm = forwardRef((props, ref) => {
                         <option value="20">20</option>
                     </select>
                 </div>
-                <label>sc6:</label>
+                <label>Một lớp đăng kí học phần ưu tiên xếp trong 1 ca</label>
                 <div class="input-group mb-3">
                     {/* <input type="text" class="form-control" name="maKS" disabled="disabled" onChange={(e) => handleInputChange(e)} defaultValue={properties[7]} /> */}
                     <select  name="sc6" className={"select-box"} onChange={(e) => handleInputChange(e)}>
