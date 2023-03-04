@@ -157,6 +157,7 @@ const ExaminationSchedule = () => {
                 <Schedule ref={subjectSchedule} />
 
             </DndProvider>
+            {isLoading?<div className="loading"> <img src="./src/assets/images/rolling-1s-200px.svg"></img></div>:null}
         </Aux>
     );
     // }

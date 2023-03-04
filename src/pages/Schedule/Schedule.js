@@ -43,9 +43,7 @@ const Schedule = forwardRef((props, ref) => {
                     console.log(newItems);
                     return [...newItems];
                 }
-               
             }
-        
             newItems.push(new ChangeSubjectScheduleRequest(item.courseName, item.dateExam.join("-"), date, shift, item.subjectScheduleIndex))
             console.log(newItems);
             return [...newItems];
@@ -82,6 +80,7 @@ const Schedule = forwardRef((props, ref) => {
         loadSubjectSchedule(null);
     }, [])
     const loadSubjectSchedule = async (name) => {
+        setIsLoaded(false);
         let path = "/subject-schedules/using/2021";
         if (name !== null) {
             path = "/subject-schedules/" + name;
@@ -146,12 +145,14 @@ const Schedule = forwardRef((props, ref) => {
         <div className={"row schedule"} >
                 <Button onClick={() => changeSubjectSchedule(change)}>Thay đổi lịch thi.</Button>
             <div className="line-shift">
-                <div className={"col-wrapper"}>
+                <div className={"col-wrapper"} style={{height: "50px"}}> 
                     <h2 className={"col-title"}> </h2>
                 </div>
                 {statuses.map(s => {
                     return (<div key={s.status} className={"col-header"}>
+                        <div>
                         <span >{reformatDate(s.status)}</span>
+                        </div>
                     </div>)
                 })}
             </div>
