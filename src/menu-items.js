@@ -8,10 +8,10 @@ export default {
             icon: 'icon-pages',
             children: [
                 {
-                    id: 'faculty',
-                    title: 'Lịch thi',
+                    id: 'schedule',
+                    title: 'Xem Lịch thi',
                     type: 'item',
-                    url: '/exam-schedule',
+                    url: '/schedule',
                     icon: 'feather icon-file-text',
                     role:"ALL"
                 },
@@ -20,6 +20,14 @@ export default {
                     title: 'Tạo lịch thi',
                     type: 'item',
                     url: '/generate-schedule',
+                    icon: 'feather icon-file-text',
+                    role:"ALL"
+                },
+                {
+                    id: 'edit-schedule',
+                    title: 'Điều chỉnh Lịch thi',
+                    type: 'item',
+                    url: '/exam-schedule',
                     icon: 'feather icon-file-text',
                     role:"ALL"
                 },
