@@ -87,11 +87,7 @@ const Item = ({ item, index, moveItem, status }) => {
                 <p className={"item-title"}>Số tín chỉ: {item.subject.credit}</p>
                 {/* <p className={"item-status"}>{item.icon}</p> */}
             </div>
-            {/* <Window
-                item={item}
-                onClose={onClose}
-                show={show}
-            /> */}
+          
         </Fragment>
     );
 };

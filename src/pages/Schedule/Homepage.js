@@ -20,15 +20,18 @@ const Homepage = forwardRef((props, ref) => {
         setChange(prevState => {
             const newItems = prevState;
             newItems.push(new ChangeScheduleRequest(item.subject.id, date))
+            console.log(newItems);
             return [...newItems];
         });
 
         date = date.split("-")
 
         setItems(prevState => {
+            console.log(item);
             const newItems = prevState
                 .filter(i => i.subject.id !== item.subject.id)
                 .concat({ ...item, date });
+                console.log(newItems);
             return [...newItems];
         });
     };
@@ -36,8 +39,10 @@ const Homepage = forwardRef((props, ref) => {
     const moveItem = (dragIndex, hoverIndex) => {
         const item = items[dragIndex];
         setItems(prevState => {
+            // console.log(prevState);
             const newItems = prevState.filter((i, idx) => idx !== dragIndex);
             newItems.splice(hoverIndex, 0, item);
+            // console.log(newItems);
             return [...newItems];
         });
     };

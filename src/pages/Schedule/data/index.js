@@ -220,22 +220,22 @@ const shifts=[
     {
         status: "shift 1",
         name:"Ca thi 1",
-        shift:1,
+        shift:0,
     },
     {
         status: "shift 2",
         name:"Ca thi 2",
-        shift:2,
+        shift:1,
     },
     {
         status: "shift 3",
         name:"Ca thi 3",
-        shift:3,
+        shift:2,
     },
     {
         status: "shift 4",
         name:"Ca thi 4",
-        shift:4,
+        shift:3,
     }
 ]
 const statuses = [{

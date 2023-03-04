@@ -1,10 +1,10 @@
 import React from "react";
 
-const ScheduleCol = ({  children }) => {
+const ScheduleCol = ({ isOver, children }) => {
  
-
+    const className = isOver ? " highlight-region" : "";
     return (
-        <div className={`schedule-col`}>
+        <div className={`schedule-col ${className}`}>
             {children}
         </div>
     );
