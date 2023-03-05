@@ -14,7 +14,9 @@ const Homepage = forwardRef((props, ref) => {
     const [canChange, setCanChange] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-   
+   const[dates,setDates]= useState([]);
+    let fileName="";
+   const [currentFileName, setCurrentFileName] = useState("USED")
     const onDrop = (item, monitor, date, shift) => {
         const mapping = statuses.find(si => si.status === date);
         setChange(prevState => {
@@ -48,8 +50,10 @@ const Homepage = forwardRef((props, ref) => {
     };
 
     useImperativeHandle(ref, () => ({
+  
 
         reLoadSchedule(status, fileName) {
+          
             if (status == 'USED') {
                 loadSchedule(null);
               
@@ -70,8 +74,8 @@ const Homepage = forwardRef((props, ref) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(csr)
         };
-       
-        const data = await api.post('/subject-schedules/change',JSON.stringify(csr))
+       console.log(currentFileName);
+        const data = await api.post('/subject-schedules/change/'+currentFileName,JSON.stringify(csr))
             .then(response => response.data)
             .then((data) => {
                 console.log(data);
@@ -84,14 +88,14 @@ const Homepage = forwardRef((props, ref) => {
 
             },
                 (error) => {
-                    alert("không thể thay đổi lịch thi như trên!!!!");
+                    alert("không thể thay đổi lịch thi như trên!!!!"+currentFileName);
                     window.location.reload();
                 }
             );
     }
 
 
-    
+  
     useEffect(() => {
         loadSchedule(null);
     }, [])
@@ -105,11 +109,15 @@ const Homepage = forwardRef((props, ref) => {
             .then(res => res.data)
             .then(
                 (result) => {
+                    console.log(result);
                     setIsLoading(false);
                     setItems(result.data);
+                    let dateList=result.data.map(data1=>data1.date.join("-")).filter((value, index, array) => array.indexOf(value) === index).sort();
+                    setDates(dateList)
+                    console.log(dateList);
                     console.log(result.data);
                     if (name != null) {
-
+                        setCurrentFileName(name);
                         setIsChange(false);
                         setCanChange(false);
                     } else {
@@ -138,21 +146,21 @@ const Homepage = forwardRef((props, ref) => {
             <div className={"row schedule"} >
                 <div className="line-shift">
 
-                    {statuses.map(s => {
-                        return (<div key={s.status} className={"col-header"}>
-                            <span >{ reformatDate(s.status)}</span>
+                    {dates.map(s => {
+                        return (<div key={s} className={"col-header"}>
+                            <span >{ reformatDate(s)}</span>
                         </div>)
                     })}
                 </div>
                 <div className="line-shift">
-                    {statuses.map(s => {
+                    {dates.map(s => {
                         return (
                             <div key={s.status} className={"col-wrapper"}>
 
-                                <DropWrapper onDrop={onDrop} date={s.status} >
+                                <DropWrapper onDrop={onDrop} date={s} >
                                     <Col>
                                         {items
-                                            .filter(i => (i.date.join('-') === s.status))
+                                            .filter(i => (i.date.join('-') === s))
                                             .map((i, idx) => <Item id={i.subject.id} item={i} index={idx} moveItem={moveItem} status={s} />)
                                         }
                                     </Col>
@@ -165,9 +173,9 @@ const Homepage = forwardRef((props, ref) => {
 
             </div>
             <div>
-                {canChange ? <Button onClick={() => changeSchedule(change)}>Thay đổi lịch thi.</Button> : null}
+                {/* {canChange ? <Button onClick={() => changeSchedule(change)}>Thay đổi lịch thi.</Button> : null} */}
                 
-
+                <Button onClick={() => changeSchedule(change)}>Thay đổi lịch thi.</Button>
             </div>
           
         </div>

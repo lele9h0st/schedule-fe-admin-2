@@ -13,8 +13,8 @@ const Schedule = forwardRef((props, ref) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [error, setError] = useState(null);
     const [change, setChange] = useState([]);
-
-
+    const[dates,setDates]= useState([]);
+   const [currentFileName, setCurrentFileName] = useState(null)
     const onDrop = (item, monitor, date, shift) => {
         const mapping = statuses.find(si => si.status === date);
         let dateList=date.split("-")
@@ -92,6 +92,10 @@ const Schedule = forwardRef((props, ref) => {
                     setIsLoaded(true);
                     setItems(result.data);
                     console.log(result.data);
+                    let dateList=result.data.map(data1=>data1.dateExam.join("-")).filter((value, index, array) => array.indexOf(value) === index).sort();
+                    setDates(dateList)
+                    if (name != null) {
+                    setCurrentFileName(name)}
                 },
                 (error) => {
                     setIsLoaded(true);
@@ -100,8 +104,9 @@ const Schedule = forwardRef((props, ref) => {
             )
     }
     useImperativeHandle(ref, () => ({
-
+      
         reLoadSubjectSchedule(status, fileName) {
+    
             if (status == 'USED') {
                 loadSubjectSchedule(null);
             } else {
@@ -119,13 +124,14 @@ const Schedule = forwardRef((props, ref) => {
             body: JSON.stringify(cssr)
         };
         console.log(cssr);
-        const data = await api.post('/subject-schedules/changeSubjectSchedule', JSON.stringify(cssr))
+        const data = await api.post('/subject-schedules/changeSubjectSchedule/'+currentFileName, JSON.stringify(cssr))
             .then(response => response.data)
             .then((data) => {
                 console.log(data);
                 setChange(
                      []
                 );
+           
                 alert("Đã thay đổi lịch thành công! Lịch mới thay đổi được thêm vào danh sách lịch thi");
 
                 window.location.reload();
@@ -148,10 +154,10 @@ const Schedule = forwardRef((props, ref) => {
                 <div className={"col-wrapper"} style={{height: "50px"}}> 
                     <h2 className={"col-title"}> </h2>
                 </div>
-                {statuses.map(s => {
-                    return (<div key={s.status} className={"col-header"}>
+                {dates.map(s => {
+                    return (<div key={s} className={"col-header"}>
                         <div>
-                        <span >{reformatDate(s.status)}</span>
+                        <span >{reformatDate(s)}</span>
                         </div>
                     </div>)
                 })}
@@ -166,13 +172,13 @@ const Schedule = forwardRef((props, ref) => {
                             </div>
                             {
 
-                                statuses.map(s => {
+dates.map(s => {
                                     return (
-                                        <div key={s.status} className={"col-wrapper"}>
-                                            <DropWrapper onDrop={onDrop} date={s.status} shift={shift.shift}>
+                                        <div key={s} className={"col-wrapper"}>
+                                            <DropWrapper onDrop={onDrop} date={s} shift={shift.shift}>
                                                 <ScheduleCol>
                                                     {items
-                                                        .filter(i => (i.dateExam.join('-') === s.status && i.shift === shift.shift))
+                                                        .filter(i => (i.dateExam.join('-') === s && i.shift === shift.shift))
                                                         .map((i, idx) => <ScheduleItem item={i} index={idx} moveItem={moveItem} />)
                                                     }
                                                 </ScheduleCol>

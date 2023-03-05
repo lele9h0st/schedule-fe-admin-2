@@ -20,7 +20,8 @@ import PacmanLoader from 'react-spinners/PacmanLoader';
 const ExaminationSchedule = () => {
     const [items, setItems] = useState([]);
     const [isCurrent, setIsCurrent] = useState(true)
-    const [currentFileName, setCurrentFileName] = useState(null)
+    const [currentFileName, setCurrentFileName] = useState("")
+    let fileName="";
     const [isLoading, setIsLoading] = useState(false);
     const [loadingCreateSchedule, setLoadingCreateSchedule] = useState(false)
     const [properties, setProperties] = useState([100, 500, 10, 10, 10, 10, 10, 10]);
@@ -33,13 +34,17 @@ const ExaminationSchedule = () => {
             .then(res => res.data)
             .then((res) => {
                 setItems(res.data);
+                //  fileName=res.data.find(item=>item.fileStatus==="USED").name;
                 console.log(res.data);
             })
     }
     useEffect(() => {
-
+      
         fetchScheduleFile()
+
     }, [])
+
+
     const generateNewSchedule = async () => {
         setLoadingCreateSchedule(true)
         const data = await api.post("subjects/newSchedule",JSON.stringify(new GenerateScheduleRequest(properties)))
@@ -72,6 +77,17 @@ const ExaminationSchedule = () => {
         console.log(editOwnerModal)
         editOwnerModal.style.display = "block";
         propertiesForm = <PropertiesForm properties={properties} />
+    }
+    const deleteFile=async(fileName)=>{
+        const data = await api.delete("subject-schedules/remove/"+fileName)
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data);
+            fetchScheduleFile()
+        })
+        .catch(e => {
+            console.log(e);
+        })
     }
     const onDownload = async () => {
         setIsLoading(true)
@@ -118,22 +134,26 @@ const ExaminationSchedule = () => {
     }
     return (
         <Aux>
-            {/* {propertiesForm} */}
+       
             <DndProvider backend={HTML5Backend}>
                 <DropdownButton id="dropdown-basic-button" title="Lịch thi">
 
-                    {items.map((i, idx) => <Dropdown.Item onClick={() => {
-                        scheduleRef.current.reLoadSchedule(i.fileStatus, i.name)
-                        subjectSchedule.current.reLoadSubjectSchedule(i.fileStatus, i.name)
-                        if (i.fileStatus !== 'USED') {
-                            setCurrentFileName(i.name)
-                            setIsCurrent(false)
-                        } else {
-                            setIsCurrent(true)
-                        }
-                    }}>
-                        {i.fileStatus == 'USED' ? "Lịch thi hiện tại." : i.name} - {translateWord(i.fileStatus)}
-                    </Dropdown.Item>)
+                    {items.map((i, idx) => 
+                    <div class="schedule-list"><Dropdown.Item onClick={() => {
+                            scheduleRef.current.reLoadSchedule(i.fileStatus, i.name);
+                            subjectSchedule.current.reLoadSubjectSchedule(i.fileStatus, i.name);
+                            if (i.fileStatus !== 'USED') {
+                                setCurrentFileName(i.name);
+                                setIsCurrent(false);
+                            } else {
+                                setIsCurrent(true);
+                            }
+                        } }>
+                            {i.fileStatus == 'USED' ? "Lịch thi hiện tại." : i.name} - {translateWord(i.fileStatus)}
+
+                        </Dropdown.Item> {(i.fileStatus !== 'USED')?
+                            <div class="delete-btn" onClick={() => deleteFile(i.name)}>x</div>:null}</div>
+                    )
                     }
                 </DropdownButton>
                 {/* <Button onClick={generateNewSchedule}>
