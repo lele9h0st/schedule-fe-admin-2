@@ -93,13 +93,13 @@ const GenerateSchedule = () => {
         <Aux>
             <Row className="justify-content-start">
                 <input id="selectFile" style={{ display: "none" }} accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" type="file" onChange={selectFile} />
-                <Button onClick={generateNewSchedule}>
+                {/* <Button onClick={generateNewSchedule}>
                     {loadingCreateSchedule ?
                         <>
                             <span>Đang tạo lịch thi...</span>
                         </>
                         : "Tạo lịch thi mẫu trên server"}
-                </Button>
+                </Button> */}
                 <Button onClick={generateNewScheduleExcel}>
                     {loadingCreateScheduleExcel ?
                         <>
