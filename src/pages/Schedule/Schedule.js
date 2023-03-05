@@ -150,7 +150,7 @@ const Schedule = forwardRef((props, ref) => {
     return (
         <div className={"row schedule"} >
                 <Button onClick={() => changeSubjectSchedule(change)}>Thay đổi lịch thi.</Button>
-            <div className="line-shift">
+            <div className="line-shift" style={{color:"black"}}>
                 <div className={"col-wrapper"} style={{height: "50px"}}> 
                     <h2 className={"col-title"}> </h2>
                 </div>
@@ -165,7 +165,7 @@ const Schedule = forwardRef((props, ref) => {
             {shifts.map(shift => {
                 return (
                     <Aux>
-                        <div className="line-shift">
+                        <div className="line-shift" style={{color:"black"}}>
                             <div className={"col-wrapper"} >
                                 <div className={"col-title"}>
                                     <span>{(shift.name)}</span></div>

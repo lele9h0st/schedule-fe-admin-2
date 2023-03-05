@@ -12,7 +12,7 @@ export default {
                     title: 'Xem Lịch thi',
                     type: 'item',
                     url: '/schedule',
-                    icon: 'feather icon-file-text',
+                    icon: 'feather icon-check-square',
                     role:"ALL"
                 },
                 {
@@ -20,7 +20,7 @@ export default {
                     title: 'Tạo lịch thi',
                     type: 'item',
                     url: '/generate-schedule',
-                    icon: 'feather icon-file-text',
+                    icon: 'feather icon-file-plus',
                     role:"ALL"
                 },
                 {
@@ -28,7 +28,7 @@ export default {
                     title: 'Điều chỉnh Lịch thi',
                     type: 'item',
                     url: '/exam-schedule',
-                    icon: 'feather icon-file-text',
+                    icon: 'feather icon-feather',
                     role:"ALL"
                 },
                 {

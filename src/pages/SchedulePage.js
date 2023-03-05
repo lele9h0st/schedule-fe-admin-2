@@ -17,6 +17,10 @@ class SchedulePage extends React.Component {
         },
         semester: [
             {
+                year: 2022,
+                semester: 1
+            },
+            {
                 year: 2021,
                 semester: 2
             },
