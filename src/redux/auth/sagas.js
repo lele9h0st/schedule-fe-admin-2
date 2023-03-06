@@ -34,10 +34,16 @@ function* loginSaga(action) {
 
             // lấy thông tin user
             const user = yield call(getUserService);
-            yield put({ type: LOGIN_SUCCESS, payload: { user: user.data } });
+           
             console.log(user);
-
-            // RootNavigate.getNavigate()('/');
+            const roles = user.data.roles?.map((item, i) => item.id);
+            if (roles?.includes('ADMIN')) {
+                yield put({ type: LOGIN_SUCCESS, payload: { user: user.data } });
+                // window.location.reload(false);
+                return;
+            }
+            yield put({ type: LOGIN_FAIL, payload: { error: 'Đăng nhập bằng tài khoản admin' } });
+            NotificationManager.error("Đăng nhập bằng tài khoản admin");
         } else {
             NotificationManager.error(response.message);
             yield put({ type: LOGIN_FAIL, payload: { error: response.message ? response.message : "Vui lòng thử lại" } });
