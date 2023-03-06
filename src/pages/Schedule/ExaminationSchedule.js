@@ -21,7 +21,7 @@ const ExaminationSchedule = () => {
     const [items, setItems] = useState([]);
     const [isCurrent, setIsCurrent] = useState(true)
     const [currentFileName, setCurrentFileName] = useState("")
-    let fileName="";
+    let fileName = "";
     const [isLoading, setIsLoading] = useState(false);
     const [loadingCreateSchedule, setLoadingCreateSchedule] = useState(false)
     const [properties, setProperties] = useState([100, 500, 10, 10, 10, 10, 10, 10]);
@@ -39,7 +39,7 @@ const ExaminationSchedule = () => {
             })
     }
     useEffect(() => {
-      
+
         fetchScheduleFile()
 
     }, [])
@@ -47,7 +47,7 @@ const ExaminationSchedule = () => {
 
     const generateNewSchedule = async () => {
         setLoadingCreateSchedule(true)
-        const data = await api.post("subjects/newSchedule",JSON.stringify(new GenerateScheduleRequest(properties)))
+        const data = await api.post("subjects/newSchedule", JSON.stringify(new GenerateScheduleRequest(properties)))
             .then(response => response.json())
             .then((data) => {
                 console.log(data);
@@ -66,11 +66,13 @@ const ExaminationSchedule = () => {
             .then((data) => {
                 console.log(data);
                 setIsLoading(false)
-            },
-                (error) => {
-                    console.log(error)
-                }
-            );
+                alert("Đổi lịch thành công.")
+
+            }).catch(e => {
+                console.log("lỗi")
+                    setIsLoading(false)
+                    alert("Đổi lịch không thành công.")
+            });
     }
     const openForm = () => {
         var editOwnerModal = document.getElementById("editModal");
@@ -78,16 +80,18 @@ const ExaminationSchedule = () => {
         editOwnerModal.style.display = "block";
         propertiesForm = <PropertiesForm properties={properties} />
     }
-    const deleteFile=async(fileName)=>{
-        const data = await api.delete("subject-schedules/remove/"+fileName)
-        .then(response => response.json())
-        .then((data) => {
-            console.log(data);
-            fetchScheduleFile()
-        })
-        .catch(e => {
-            console.log(e);
-        })
+    const deleteFile = async (fileName) => {
+        const data = await api.delete("subject-schedules/remove/" + fileName)
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data);
+                fetchScheduleFile()
+                alert("Đã xóa thành công.")
+            })
+            .catch(e => {
+                console.log(e);
+                alert("Xóa không thành công.")
+            })
     }
     const onDownload = async () => {
         setIsLoading(true)
@@ -110,36 +114,36 @@ const ExaminationSchedule = () => {
     const override = {
         marginTop: 3,
         borderColor: "white",
-     
+
         // left: -12
     };
-    const translateWord =(word)=>{
-        let result=word;
-        if(word=="current"){
-            result= "Lịch thi hiện tại."
-        }else if(word=="CHANGE"){
-            result=  "Thay đổi"
-        }else if(word=="DELETE"){
-            result=  "Xóa"
-        }else if(word=="NEW"){
-            result=  "Mới"
-        }else if(word=="ESSAY"){
-            result=  "Lý thuyết"
-        }else if(word=="COMPUTATIONAL"){
-            result=  "Thực hành"
-        }else if(word=="ORAL"){
-            result=  "Vấn đáp"
+    const translateWord = (word) => {
+        let result = word;
+        if (word == "current") {
+            result = "Lịch thi hiện tại."
+        } else if (word == "CHANGE") {
+            result = "Thay đổi"
+        } else if (word == "DELETE") {
+            result = "Xóa"
+        } else if (word == "NEW") {
+            result = "Mới"
+        } else if (word == "ESSAY") {
+            result = "Lý thuyết"
+        } else if (word == "COMPUTATIONAL") {
+            result = "Thực hành"
+        } else if (word == "ORAL") {
+            result = "Vấn đáp"
         }
-        return result ;
+        return result;
     }
     return (
         <Aux>
-       
+
             <DndProvider backend={HTML5Backend}>
                 <DropdownButton id="dropdown-basic-button" title="Lịch thi">
 
-                    {items.map((i, idx) => 
-                    <div class="schedule-list"><Dropdown.Item onClick={() => {
+                    {items.map((i, idx) =>
+                        <div class="schedule-list"><Dropdown.Item onClick={() => {
                             scheduleRef.current.reLoadSchedule(i.fileStatus, i.name);
                             subjectSchedule.current.reLoadSubjectSchedule(i.fileStatus, i.name);
                             if (i.fileStatus !== 'USED') {
@@ -148,11 +152,11 @@ const ExaminationSchedule = () => {
                             } else {
                                 setIsCurrent(true);
                             }
-                        } }>
+                        }}>
                             {i.fileStatus == 'USED' ? "Lịch thi hiện tại." : i.name} - {translateWord(i.fileStatus)}
 
-                        </Dropdown.Item> {(i.fileStatus !== 'USED')?
-                            <div class="delete-btn" onClick={() => deleteFile(i.name)}>x</div>:null}</div>
+                        </Dropdown.Item> {(i.fileStatus !== 'USED') ?
+                            <div class="delete-btn" onClick={() => deleteFile(i.name)}>x</div> : null}</div>
                     )
                     }
                 </DropdownButton>
@@ -177,7 +181,7 @@ const ExaminationSchedule = () => {
                 <Schedule ref={subjectSchedule} />
 
             </DndProvider>
-            {isLoading?<div className="loading"> <img src="./src/assets/images/rolling-1s-200px.svg"></img></div>:null}
+            {isLoading ? <div className="loading"> <img src="./src/assets/images/rolling-1s-200px.svg"></img></div> : null}
         </Aux>
     );
     // }

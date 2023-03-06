@@ -147,9 +147,10 @@ const Schedule = forwardRef((props, ref) => {
         var dArr = dateStr.split("-");  // ex input: "2010-01-18"
         return dArr[2] + "/" + dArr[1] + "/" + dArr[0]; //ex output: "18/01/10"
     }
-    return (
+    return (<Aux>
+        <Button onClick={() => changeSubjectSchedule(change)}>Thay đổi lịch thi.</Button>
         <div className={"row schedule"} >
-                <Button onClick={() => changeSubjectSchedule(change)}>Thay đổi lịch thi.</Button>
+             
             <div className="line-shift" style={{color:"black"}}>
                 <div className={"col-wrapper"} style={{height: "50px"}}> 
                     <h2 className={"col-title"}> </h2>
@@ -192,6 +193,6 @@ dates.map(s => {
                     </Aux>)
             })}
 
-        </div>)
+        </div></Aux>)
 })
 export default Schedule
