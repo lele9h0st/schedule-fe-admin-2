@@ -36,8 +36,8 @@ class NavLeft extends Component {
                             <ul>
                                 <Dropdown.Menu>
                                     <li><a className="dropdown-item" href={"/schedule"}>Xem lịch thi</a></li>
-                                    <li><a className="dropdown-item" href={"time-table"}>Xem thời khóa biểu</a></li>
-                                    <li><a className="dropdown-item" href={"/score-table"}>Xem điểm</a></li>
+                                    <li><a className="dropdown-item" href={"/generate-schedule"}>Tạo lịch thi</a></li>
+                                    <li><a className="dropdown-item" href={"/exam-schedule"}>Điều chỉnh lịch thi</a></li>
                                 </Dropdown.Menu>
                             </ul>
                         </Dropdown>
