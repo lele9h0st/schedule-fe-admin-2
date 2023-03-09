@@ -88,7 +88,7 @@ const Homepage = forwardRef((props, ref) => {
 
             },
                 (error) => {
-                    alert("không thể thay đổi lịch thi như trên!!!!"+currentFileName);
+                    alert("không thể thay đổi lịch thi như trên!!!!");
                     window.location.reload();
                 }
             );

@@ -30,10 +30,12 @@ const ExaminationSchedule = () => {
     const subjectSchedule = useRef();
     var propertiesForm = <PropertiesForm properties={properties} />
     const fetchScheduleFile = async () => {
+        setIsLoading(true)
         const data = await api.get("subjects/schedule-files")
             .then(res => res.data)
             .then((res) => {
                 setItems(res.data);
+                setIsLoading(false)
                 //  fileName=res.data.find(item=>item.fileStatus==="USED").name;
                 console.log(res.data);
             })
@@ -63,7 +65,7 @@ const ExaminationSchedule = () => {
         try {
             setIsLoading(true)
             const data = await api.post("subject-schedules/as-default/" + fileName)
-                .then(response => response.json())
+                // .then(response => response.json())
                 .then((data) => {
                     console.log(data);
                     setIsLoading(false)
@@ -71,7 +73,7 @@ const ExaminationSchedule = () => {
 
                 })
         } catch (error) {
-            console.log("lỗi")
+            console.log("lỗi"+error)
             setIsLoading(false)
             alert("Đổi lịch không thành công.")
         }
@@ -110,6 +112,10 @@ const ExaminationSchedule = () => {
                 link.click()
                 link.remove()
                 setIsLoading(false)
+            }) .catch(e => {
+                console.log(e);
+                setIsLoading(false)
+                alert("Tải không thành công.")
             })
 
     }
