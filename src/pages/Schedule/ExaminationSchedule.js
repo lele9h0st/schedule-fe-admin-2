@@ -60,19 +60,21 @@ const ExaminationSchedule = () => {
 
 
     const setDefaultSchedule = async (fileName) => {
-        setIsLoading(true)
-        const data = await api.post("subject-schedules/as-default/" + fileName)
-            .then(response => response.json())
-            .then((data) => {
-                console.log(data);
-                setIsLoading(false)
-                alert("Đổi lịch thành công.")
-
-            }).catch(e => {
-                console.log("lỗi")
+        try {
+            setIsLoading(true)
+            const data = await api.post("subject-schedules/as-default/" + fileName)
+                .then(response => response.json())
+                .then((data) => {
+                    console.log(data);
                     setIsLoading(false)
-                    alert("Đổi lịch không thành công.")
-            });
+                    alert("Đổi lịch thành công.")
+
+                })
+        } catch (error) {
+            console.log("lỗi")
+            setIsLoading(false)
+            alert("Đổi lịch không thành công.")
+        }
     }
     const openForm = () => {
         var editOwnerModal = document.getElementById("editModal");
