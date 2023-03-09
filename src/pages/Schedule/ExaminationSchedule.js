@@ -100,10 +100,10 @@ const ExaminationSchedule = () => {
     const onDownload = async () => {
         setIsLoading(true)
         let fileName = 'current';
-        if (currentFileName != null) {
+        if (currentFileName) {
             fileName = currentFileName;
         }
-        await api.get("subjects/export-schedule/" + fileName, { responseType: 'blob' })
+        await api.get(`subjects/export-schedule/${fileName}`, { responseType: 'blob' })
 
             .then(res => {
                 const link = document.createElement('a')
