@@ -148,7 +148,7 @@ const Schedule = forwardRef((props, ref) => {
         return dArr[2] + "/" + dArr[1] + "/" + dArr[0]; //ex output: "18/01/10"
     }
     return (<Aux>
-        <Button onClick={() => changeSubjectSchedule(change)}>Thay đổi lịch thi.</Button>
+        <Button onClick={() => changeSubjectSchedule(change)}>Lưu thay đổi lịch thi.</Button>
         <div className={"row schedule"} >
              
             <div className="line-shift" style={{color:"black"}}>

@@ -89,7 +89,7 @@ const Homepage = forwardRef((props, ref) => {
             },
                 (error) => {
                     alert("không thể thay đổi lịch thi như trên!!!!");
-                    window.location.reload();
+                    // window.location.reload();
                 }
             );
     }
@@ -175,7 +175,7 @@ const Homepage = forwardRef((props, ref) => {
             <div>
                 {/* {canChange ? <Button onClick={() => changeSchedule(change)}>Thay đổi lịch thi.</Button> : null} */}
                 
-                <Button onClick={() => changeSchedule(change)}>Thay đổi lịch thi.</Button>
+                <Button onClick={() => changeSchedule(change)}>Lưu thay đổi lịch thi.</Button>
             </div>
           
         </div>

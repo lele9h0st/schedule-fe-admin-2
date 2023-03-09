@@ -16,12 +16,13 @@ import PropertiesForm from './PropertiesForm';
 import { GenerateScheduleRequest } from './Model/GenerateScheduleRequest';
 import LoadingOverlay from 'react-loading-overlay';
 import PacmanLoader from 'react-spinners/PacmanLoader';
+import { formatDateFull } from '../../utils/formatDate';
 
 const ExaminationSchedule = () => {
     const [items, setItems] = useState([]);
     const [isCurrent, setIsCurrent] = useState(true)
     const [currentFileName, setCurrentFileName] = useState("")
-    let fileName = "";
+    const [fileName, setFileName] = useState("Lịch thi đang áp dụng")
     const [isLoading, setIsLoading] = useState(false);
     const [loadingCreateSchedule, setLoadingCreateSchedule] = useState(false)
     const [properties, setProperties] = useState([100, 500, 10, 10, 10, 10, 10, 10]);
@@ -73,7 +74,7 @@ const ExaminationSchedule = () => {
 
                 })
         } catch (error) {
-            console.log("lỗi"+error)
+            console.log("lỗi" + error)
             setIsLoading(false)
             alert("Đổi lịch không thành công.")
         }
@@ -86,7 +87,6 @@ const ExaminationSchedule = () => {
     }
     const deleteFile = async (fileName) => {
         const data = await api.delete("subject-schedules/remove/" + fileName)
-            .then(response => response.json())
             .then((data) => {
                 console.log(data);
                 fetchScheduleFile()
@@ -112,7 +112,7 @@ const ExaminationSchedule = () => {
                 link.click()
                 link.remove()
                 setIsLoading(false)
-            }) .catch(e => {
+            }).catch(e => {
                 console.log(e);
                 setIsLoading(false)
                 alert("Tải không thành công.")
@@ -148,23 +148,28 @@ const ExaminationSchedule = () => {
         <Aux>
 
             <DndProvider backend={HTML5Backend}>
-                <DropdownButton id="dropdown-basic-button" title="Lịch thi">
+                <DropdownButton id="dropdown-basic-button" title={fileName}>
 
                     {items.map((i, idx) =>
-                        <div class="schedule-list"><Dropdown.Item onClick={() => {
-                            scheduleRef.current.reLoadSchedule(i.fileStatus, i.name);
-                            subjectSchedule.current.reLoadSubjectSchedule(i.fileStatus, i.name);
-                            if (i.fileStatus !== 'USED') {
-                                setCurrentFileName(i.name);
-                                setIsCurrent(false);
-                            } else {
-                                setIsCurrent(true);
-                            }
-                        }}>
-                            {i.fileStatus == 'USED' ? "Lịch thi hiện tại." : i.name} - {translateWord(i.fileStatus)}
-
-                        </Dropdown.Item> {(i.fileStatus !== 'USED') ?
-                            <div class="delete-btn" onClick={() => deleteFile(i.name)}>x</div> : null}</div>
+                        <div class="schedule-list">
+                            <Dropdown.Item onClick={() => {
+                                scheduleRef.current.reLoadSchedule(i.fileStatus, i.name);
+                                subjectSchedule.current.reLoadSubjectSchedule(i.fileStatus, i.name);
+                                if (i.fileStatus !== 'USED') {
+                                    setCurrentFileName(i.name);
+                                    setIsCurrent(false);
+                                } else {
+                                    setIsCurrent(true);
+                                }
+                                if (i.fileStatus == 'USED') {
+                                    setFileName("Lịch thi đang áp dụng")
+                                } else {
+                                    setFileName(i.name + " - " + translateWord(i.fileStatus))
+                                }
+                            }}>
+                                {i.fileStatus == 'USED' ? "Lịch thi đang áp dụng " : i.name +"-"+translateWord(i.fileStatus)}
+                            </Dropdown.Item> {(i.fileStatus !== 'USED') ?
+                                <div class="delete-btn" onClick={() => deleteFile(i.name)}>x</div> : null}</div>
                     )
                     }
                 </DropdownButton>
